@@ -7,7 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.byeolstagram.R
+import com.example.byeolstagram.navigation.model.ContentDTO
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_add_photo.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -68,10 +73,68 @@ class AddPhotoActivity : AppCompatActivity() {
         var storageRef = storage?.reference?.child("images")?.child(imageFileName)
 
         // File Upload
+
+        // Promise method <- 구글에서 권장하는 방식
+        storageRef?.putFile(photoUri!!)?.continueWithTask {
+            task : Task<UploadTask.TaskSnapshot> ->
+                return@continueWithTask storageRef.downloadUrl
+        }?.addOnSuccessListener { uri ->
+            var contentDTO = ContentDTO()
+
+            //Insert downloadurl of iamge
+            contentDTO.imageUrl = uri.toString()
+
+            // Insert uid of suer
+            contentDTO.uid = auth?.currentUser?.uid
+
+            // Insert userId
+            contentDTO.userId = auth?.currentUser?.email
+
+            // Insert explain of content
+            contentDTO.explain = addphoto_edit_explain.text.toString()
+
+            // Insert timestamp
+            contentDTO.timestamp = System.currentTimeMillis()
+
+            // contentDTO를 images 컬렉션 안에다가 데이터를 넣어줌
+            firestore?.collection("images")?.document()?.set(contentDTO)
+
+            setResult(Activity.RESULT_OK)
+
+            finish()
+        }
+
+
         // Callback method
         storageRef?.putFile(photoUri!!)?.addOnSuccessListener {
-            Toast.makeText(this, getString(R.string.upload_success), Toast.LENGTH_LONG).show()
-            storageRef.download
+            /*
+            // Toast.makeText(this, getString(R.string.upload_success), Toast.LENGTH_LONG).show()
+            storageRef.downloadUrl.addOnSuccessListener { uri ->
+                var contentDTO = ContentDTO()
+
+                //Insert downloadurl of iamge
+                contentDTO.imageUrl = uri.toString()
+
+                // Insert uid of suer
+                contentDTO.uid = auth?.currentUser?.uid
+
+                // Insert userId
+                contentDTO.userId = auth?.currentUser?.email
+
+                // Insert explain of content
+                contentDTO.explain = addphoto_edit_explain.text.toString()
+
+                // Insert timestamp
+                contentDTO.timestamp = System.currentTimeMillis()
+
+                // contentDTO를 images 컬렉션 안에다가 데이터를 넣어줌
+                firestore?.collection("images")?.document()?.set(contentDTO)
+
+                setResult(Activity.RESULT_OK)
+
+                finish()
+            }
+             */
         }
     }
 }
