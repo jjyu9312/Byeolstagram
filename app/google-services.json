@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "325476636919",
+    "project_id": "beoylstagram",
+    "storage_bucket": "beoylstagram.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325476636919:android:ba23b72c802d62fec2dbf2",
+        "android_client_info": {
+          "package_name": "com.example.byeolstagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "325476636919-viujt3dn9q097n748l4ud52d957ubvj3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv1G_yVLzUemN7gc-cBA0J6Tnp1FR2uvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "325476636919-viujt3dn9q097n748l4ud52d957ubvj3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
