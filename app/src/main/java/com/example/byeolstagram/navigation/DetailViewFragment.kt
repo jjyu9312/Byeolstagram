@@ -1,5 +1,6 @@
 package com.example.byeolstagram.navigation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -93,6 +94,22 @@ class DetailViewFragment : Fragment() {
             } else {
                 // 좋아요가 클릭되지 않은 이벤트
                 viewholder.detailviewitem_favorite_imageview.setImageResource(R.drawable.ic_favorite_border)
+            }
+
+            // 프로필 이미지 클릭 이벤트
+            viewholder.detailviewitem_profile_image.setOnClickListener {
+                var fragment = UserFragment()
+                var bundle = Bundle()
+                bundle.putString("destinationUid", contentDTOs[p1].uid)
+                bundle.putString("userId", contentDTOs[p1].userId)
+                fragment.arguments = bundle
+                activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.main_content, fragment)?.commit()
+            }
+
+            viewholder.detailviewitem_comment_imageview.setOnClickListener { v ->
+                var intent = Intent(v.context, CommentActivity::class.java)
+                intent.putExtra("contentUid", contentUidList[p1]) // 내가 선택한 이미지의 Uid 값이 담김
+                startActivity(intent)
             }
 
             // Profile Image

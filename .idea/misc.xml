@@ -5,13 +5,15 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.18981481481481483" />
         <entry key="app/src/main/res/layout/activity_add_photo.xml" value="0.13645833333333332" />
+        <entry key="app/src/main/res/layout/activity_comment.xml" value="0.12239583333333333" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1503623188405797" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.23450531060321952" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.10699588477366255" />
         <entry key="app/src/main/res/layout/bottom_navigation_main.xml" value="0.12239583333333333" />
         <entry key="app/src/main/res/layout/fragment_alarm.xml" value="0.13645833333333332" />
         <entry key="app/src/main/res/layout/fragment_detail.xml" value="0.12239583333333333" />
         <entry key="app/src/main/res/layout/fragment_grid.xml" value="0.13645833333333332" />
         <entry key="app/src/main/res/layout/fragment_user.xml" value="0.13645833333333332" />
+        <entry key="app/src/main/res/layout/item_comment.xml" value="0.13645833333333332" />
         <entry key="app/src/main/res/layout/item_detail.xml" value="0.24320652173913043" />
         <entry key="app/src/main/res/menu/bottom_navigation_main.xml" value="0.13645833333333332" />
       </map>
