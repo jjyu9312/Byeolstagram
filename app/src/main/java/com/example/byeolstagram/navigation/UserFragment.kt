@@ -20,6 +20,7 @@ import com.example.byeolstagram.R
 import com.example.byeolstagram.navigation.model.AlarmDTO
 import com.example.byeolstagram.navigation.model.ContentDTO
 import com.example.byeolstagram.navigation.model.FollowDTO
+import com.example.byeolstagram.util.FcmPush
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
@@ -176,6 +177,9 @@ class UserFragment : Fragment() {
             .collection("alarms")
             .document()
             .set(alarmDTO)
+
+        var message = auth?.currentUser?.email + getString(R.string.alarm_follow)
+        FcmPush.instance.sendMessage(destinationUid, "title", "message")
     }
 
     fun getProfileImage() {

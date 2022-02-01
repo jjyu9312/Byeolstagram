@@ -10,10 +10,12 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.byeolstagram.navigation.*
+import com.example.byeolstagram.util.FcmPush
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,7 +29,17 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         // Set default screen
         bottom_navigation.selectedItemId = R.id.action_home
+
+        // token 저장 실행
+        registerPushToken()
     }
+
+    /*
+    override fun onStop() {
+        super.onStop()
+        FcmPush.instance.sendMessage("Uid 값", "title", "message")
+    }
+     */
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -90,5 +102,18 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         toolbar_username.visibility = View.GONE
         toolbar_btn_back.visibility = View.GONE
         toolbar_title_image.visibility = View.VISIBLE
+    }
+
+    // 특정 디바이스에만 푸시 메시지 전송 (default는 전체 전송)
+    fun registerPushToken() {
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
+            val token = task.result?.token
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
+            var map = mutableMapOf<String, Any>()
+            map["pushToken"] = token!!
+
+            // Firebase에 pushtokens 컬렉션을 만들어 token 저장
+            FirebaseFirestore.getInstance().collection("pushtokens").document(uid!!).set(map)
+        }
     }
 }
